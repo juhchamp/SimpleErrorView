@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleErrorView">
+        <attr name="label" format="string"/>
+        <attr name="buttonLabel" format="string"/>
+        <attr name="labelGravity" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

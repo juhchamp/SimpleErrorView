@@ -1,0 +1,3 @@
+rootProject.name='Simple Error View'
+include ':app'
+include ':simple_error_view_library'
