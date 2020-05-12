@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
-import android.widget.Toast
+import juhchamp.com.br.simple_error_view_library.ErrorViewStates
 import juhchamp.com.br.simple_error_view_library.SimpleErrorViewListeners
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), SimpleErrorViewListeners {
         simpleErrorView.setLabel("Houve um erro: [ 404 ]")
         simpleErrorView.setButtonLabel("Tentar novamente")
         simpleErrorView.setViewListeners(this)
+
         // just for test, show error view after 5 seconds
         simpleErrorView.postDelayed({ simpleErrorView.show() }, 5000L)
     }
@@ -28,28 +29,19 @@ class MainActivity : AppCompatActivity(), SimpleErrorViewListeners {
 
     //region SimpleErrorViewListeners
 
-    override fun onErrorViewTryAgain() {
-        simpleErrorView.load()
+    override fun onTryAgainButtonClick() {
+        // just for test, set error view state to IDLE after 5 seconds
+        simpleErrorView.postDelayed({ simpleErrorView.viewState = ErrorViewStates.IDLE }, 5000L)
     }
 
     override fun onErrorViewShow() {
-        textClock.visibility = INVISIBLE
+        calendarView.visibility = INVISIBLE
     }
 
     override fun onErrorViewHide() {
-        textClock.visibility = VISIBLE
-        // just for test, show error view after 5 seconds again
+        calendarView.visibility = VISIBLE
+        // just for test, show error view again after 5 seconds
         simpleErrorView.postDelayed({ simpleErrorView.show() }, 5000L)
-    }
-
-    override fun onErrorViewStartLoading() {
-        // just for test, call unload after 5 seconds
-        simpleErrorView.postDelayed({ simpleErrorView.unload() }, 5000L)
-    }
-
-    override fun onErrorViewFinishLoading() {
-        // just for test, hide view when loading finished
-        simpleErrorView.hide()
     }
 
     //endregion

@@ -11,9 +11,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 
+enum class ErrorViewStates {
+    IDLE,
+    LOADING
+}
+
 class SimpleErrorView: LinearLayout {
 
-    private var isLoading: Boolean = false
     private var mTextLabel: String? = "Error Label"
     private var mButtonLabel: String? = "Tentar novamente"
 
@@ -22,6 +26,13 @@ class SimpleErrorView: LinearLayout {
     private var progressBar: ProgressBar? = null
 
     private var listener: SimpleErrorViewListeners? = null
+    var viewState: ErrorViewStates = ErrorViewStates.IDLE
+        set(value) {
+            if (value != field) {
+                field = value
+                handleState()
+            }
+        }
 
     constructor(context: Context?) : super(context) {
         init(context, null, 0, 0)
@@ -80,7 +91,8 @@ class SimpleErrorView: LinearLayout {
                 throw NullPointerException("SimpleErrorViewListeners can be not a null! " +
                         "Implement the interface: SimpleErrorView.setViewListeners(object)")
             }*/
-            listener?.onErrorViewTryAgain()
+            viewState = ErrorViewStates.LOADING
+            listener?.onTryAgainButtonClick()
         }
     }
 
@@ -88,17 +100,18 @@ class SimpleErrorView: LinearLayout {
         const val mTag = "SimpleErrorView"
     }
 
-    private fun onLoad(isLoading: Boolean) {
-        if (isLoading) {
-            errorLabelTv!!.visibility = View.INVISIBLE
-            tryAgainBtn!!.visibility = View.INVISIBLE
-            progressBar!!.visibility = View.VISIBLE
-            listener?.onErrorViewStartLoading()
-        } else {
-            errorLabelTv!!.visibility = View.VISIBLE
-            tryAgainBtn!!.visibility = View.VISIBLE
-            progressBar!!.visibility = View.GONE
-            listener?.onErrorViewFinishLoading()
+    private fun handleState() {
+        when (viewState) {
+            ErrorViewStates.IDLE -> {
+                errorLabelTv!!.visibility = View.VISIBLE
+                tryAgainBtn!!.visibility = View.VISIBLE
+                progressBar!!.visibility = View.GONE
+            }
+            ErrorViewStates.LOADING -> {
+                errorLabelTv!!.visibility = View.INVISIBLE
+                tryAgainBtn!!.visibility = View.INVISIBLE
+                progressBar!!.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -136,28 +149,6 @@ class SimpleErrorView: LinearLayout {
     fun setButtonLabel(label: String) {
         mButtonLabel = label
         tryAgainBtn!!.text = mButtonLabel
-        invalidate()
-        requestLayout()
-    }
-
-    /**
-     * Start error loading.
-     * Its show the error view progress bar and hide label and try again button
-     */
-    fun load() {
-        isLoading = true
-        onLoad(isLoading)
-        invalidate()
-        requestLayout()
-    }
-
-    /**
-     * Stop error loading.
-     * Its hide the error view progress bar and show label and try again
-     */
-    fun unload() {
-        isLoading = false
-        onLoad(isLoading)
         invalidate()
         requestLayout()
     }
