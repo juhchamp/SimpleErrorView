@@ -167,6 +167,7 @@ class SimpleErrorView: LinearLayout {
      * Hide error view.
      */
     fun hide() {
+        viewState = ErrorViewStates.IDLE
         visibility = View.INVISIBLE
         listener?.onErrorViewHide()
         invalidate()
