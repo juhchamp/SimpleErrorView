@@ -86,6 +86,9 @@ class SimpleErrorView: LinearLayout {
             }
         }
 
+        errorLabelTv!!.text = mTextLabel
+        tryAgainBtn!!.text = mButtonLabel
+
         tryAgainBtn!!.setOnClickListener {
             /*if (listener == null) {
                 throw NullPointerException("SimpleErrorViewListeners can be not a null! " +
