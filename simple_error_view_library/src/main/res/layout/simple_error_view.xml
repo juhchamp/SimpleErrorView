@@ -8,6 +8,7 @@
         android:orientation="vertical"
         android:gravity="center_vertical">
         <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
             android:id="@+id/errorText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

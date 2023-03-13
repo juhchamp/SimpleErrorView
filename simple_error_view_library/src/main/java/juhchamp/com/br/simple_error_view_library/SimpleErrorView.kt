@@ -81,6 +81,13 @@ class SimpleErrorView: LinearLayout {
             try {
                 mTextLabel = getString(R.styleable.SimpleErrorView_label)
                 mButtonLabel = getString(R.styleable.SimpleErrorView_buttonLabel)
+
+                val paddingDp = getDimension(R.styleable.SimpleErrorView_labelPaddingG, 8f)
+                val paddingPixel = paddingDp.toInt()
+                errorLabelTv!!.setPadding(
+                    paddingPixel, paddingPixel, paddingPixel, paddingPixel
+                )
+
             } finally {
                 recycle()
             }
