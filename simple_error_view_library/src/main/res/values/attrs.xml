@@ -3,7 +3,7 @@
     <declare-styleable name="SimpleErrorView">
         <attr name="label" format="string"/>
         <attr name="buttonLabel" format="string"/>
-        <attr name="labelPaddingG" format="dimension"/>
+        <attr name="labelPadding" format="dimension"/>
         <attr name="labelGravity" format="enum">
             <enum name="left" value="0"/>
             <enum name="center" value="1"/>
